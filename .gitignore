@@ -1,0 +1,7 @@
+app/*
+
+docker/db/mysql/*
+!docker/db/mysql/.gitkeep
+
+docker/db/redis/*
+!docker/db/redis/.gitkeep
