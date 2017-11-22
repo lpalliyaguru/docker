@@ -1,10 +1,10 @@
 FROM php:5.6-apache
 # 1. Normal Update
-RUN apt-get update -y && apt-get install -y libpng-dev curl libcurl4-openssl-dev libxml2-dev php-soap
+RUN apt-get update -y && apt-get install -y libpng-dev curl libcurl4-openssl-dev libxml2-dev php-soap net-tools
 
 # 2. Install Pdo, pdo_mysql, gd, curl, soap
 RUN docker-php-ext-install pdo pdo_mysql gd curl soap
-
+RUN docker-php-ext-install sockets
 # 3. Install Redis PHP extension
 # install phpredis extension
 ENV PHPREDIS_VERSION 3.1.2
@@ -20,6 +20,7 @@ COPY my-dev.insead.edu.conf /etc/apache2/sites-available/
 
 # 5. Apache reloading
 RUN a2enmod rewrite
+RUN a2enmod ssl
 RUN service apache2 restart
 RUN a2ensite my-dev.insead.edu.conf
 RUN service apache2 restart
