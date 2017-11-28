@@ -5,9 +5,12 @@ RUN apt-get update -y && apt-get install -y libpng-dev curl libcurl4-openssl-dev
 # 2. Install Pdo, pdo_mysql, gd, curl, soap
 RUN docker-php-ext-install pdo pdo_mysql gd curl soap
 RUN docker-php-ext-install sockets
+
 # 3. Install Redis PHP extension
 # install phpredis extension
 ENV PHPREDIS_VERSION 3.1.2
+RUN pecl install apcu-beta \
+    && echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini
 
 RUN pecl install -o -f redis \
 &&  rm -rf /tmp/pear \
